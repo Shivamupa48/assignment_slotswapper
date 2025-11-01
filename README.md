@@ -87,20 +87,31 @@ MONGODB_URI=your_mongodb_connection_string_here
 JWT_SECRET=your_super_secret_jwt_key_change_this_in_production_12345
 ```
 
-**Important MongoDB Setup:**
-- **For MongoDB Atlas**: 
-  - Sign up at https://www.mongodb.com/cloud/atlas
-  - Create a free cluster
-  - Click "Connect" → "Connect your application"
-  - Copy the connection string (looks like: `mongodb+srv://username:password@cluster.mongodb.net/`)
-  - Replace `<password>` with your actual password
-  - Add database name: `mongodb+srv://username:password@cluster.mongodb.net/slotswapper`
-  - Whitelist IP address: `0.0.0.0/0` (for testing) or your specific IP
+**⚠️ IMPORTANT: Database Setup Required**
 
-- **For Local MongoDB**:
-  - Install MongoDB Community Server
-  - Start MongoDB service
-  - Use: `mongodb://localhost:27017/slotswapper`
+**You MUST set up MongoDB before running the application.** The app requires a database to store users, events, and swap requests.
+
+**Recommended: MongoDB Atlas (Cloud - FREE)** ✅
+- ✅ No installation needed
+- ✅ Works with GitHub deployments
+- ✅ Free tier available (512MB storage)
+- ✅ Accessible from anywhere
+- **Setup Guide:** See [MONGODB_SETUP_GUIDE.md](./MONGODB_SETUP_GUIDE.md) or follow below:
+
+**Quick MongoDB Atlas Setup:**
+1. Sign up at https://www.mongodb.com/cloud/atlas (FREE)
+2. Create a free M0 cluster (takes 3-5 minutes)
+3. Go to "Database Access" → Create database user (save username/password!)
+4. Go to "Network Access" → Add IP: `0.0.0.0/0` (allow from anywhere)
+5. Go to "Database" → "Connect" → "Connect your application"
+6. Copy connection string: `mongodb+srv://username:password@cluster.mongodb.net/`
+7. Add database name: `...mongodb.net/slotswapper`
+8. Paste in `.env` file as `MONGODB_URI`
+
+**Alternative: Local MongoDB** (NOT recommended for GitHub/deployment)
+- Install MongoDB Community Server
+- Start MongoDB service
+- Use: `mongodb://localhost:27017/slotswapper`
 
 4. Replace `your_mongodb_connection_string_here` in `.env` with your actual connection string.
 
