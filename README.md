@@ -169,9 +169,9 @@ The browser will automatically open at `http://localhost:3000`
 |--------|----------|-------------|---------------|
 | POST | `/api/auth/signup` | Register new user | No |
 | POST | `/api/auth/login` | Login user (returns JWT) | No |
-| POST | `/api/auth/reset-password` | Reset password | No |
+| POST | `/api/auth/reset-password` | Reset password via email | No |
 | GET | `/api/auth/me` | Get current user | Yes |
-| PUT | `/api/auth/profile` | Update profile | Yes |
+| PUT | `/api/auth/profile` | Update profile (name, email) | Yes |
 
 ### Events
 | Method | Endpoint | Description | Auth Required |
@@ -272,6 +272,29 @@ Content-Type: application/json
 }
 ```
 
+#### 7. Reset Password
+```bash
+POST http://localhost:5000/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "newPassword": "newpassword123"
+}
+```
+
+#### 8. Update Profile
+```bash
+PUT http://localhost:5000/api/auth/profile
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "name": "Updated Name",
+  "email": "newemail@example.com"
+}
+```
+
 ---
 
 ## 🏗️ Project Structure
@@ -303,9 +326,11 @@ slotswapper/
 │   │   ├── pages/
 │   │   │   ├── Login.tsx             # Login page
 │   │   │   ├── Signup.tsx            # Signup page
-│   │   │   ├── Dashboard.tsx        # Calendar/Dashboard page
-│   │   │   ├── Marketplace.tsx      # Marketplace page
-│   │   │   └── Notifications.tsx    # Notifications page
+│   │   │   ├── ForgotPassword.tsx    # Password reset page
+│   │   │   ├── Dashboard.tsx          # Calendar/Dashboard page
+│   │   │   ├── Marketplace.tsx       # Marketplace page
+│   │   │   ├── Notifications.tsx      # Notifications page
+│   │   │   └── EditProfile.tsx       # Edit profile page
 │   │   ├── services/
 │   │   │   ├── authService.ts        # Auth API calls
 │   │   │   ├── eventService.ts       # Event API calls
@@ -429,6 +454,16 @@ The core swap functionality works as follows:
 
 ---
 
+## 🎨 UI Features
+
+- Modern gradient design with smooth animations
+- Responsive layout (mobile-friendly)
+- Profile dropdown with avatar and quick actions
+- Interactive forms with real-time validation
+- Toast notifications for user feedback
+- Loading states and spinners
+- Protected routes with authentication
+
 ## 🔮 Future Enhancements (Bonus Features)
 
 Potential improvements if time permits:
@@ -438,7 +473,6 @@ Potential improvements if time permits:
 - [ ] Calendar grid view (instead of list)
 - [ ] Email notifications for swap requests
 - [ ] Swap history and analytics
-- [ ] User profiles and preferences
 - [ ] Docker containerization
 - [ ] Deploy to production (Vercel/Netlify + Render/Heroku)
 
@@ -479,15 +513,65 @@ Built as a Full Stack Developer Internship technical challenge.
 
 ---
 
-## 📞 Support
+## 📞 Support & Documentation
 
-If you encounter any issues during setup or have questions, please refer to:
-- `SETUP_INSTRUCTIONS.md` for detailed setup steps
-- `PROJECT_PLAN.md` for implementation details
-- Check backend console logs for error messages
-- Check browser console for frontend errors
+**Detailed Guides Available:**
+- 📘 [GITHUB_SETUP_GUIDE.md](./GITHUB_SETUP_GUIDE.md) - How to push to GitHub and set up database
+- 🗄️ [MONGODB_SETUP_GUIDE.md](./MONGODB_SETUP_GUIDE.md) - Complete MongoDB setup instructions
+- 🔄 [HOW_TO_SWAP_EVENTS_GUIDE.md](./HOW_TO_SWAP_EVENTS_GUIDE.md) - Step-by-step swap process
+- 🛒 [MARKETPLACE_AND_NOTIFICATIONS_GUIDE.md](./MARKETPLACE_AND_NOTIFICATIONS_GUIDE.md) - Feature explanations
+- 🚀 [QUICK_START.md](./QUICK_START.md) - Quick setup guide
+
+**If you encounter issues:**
+- Check `SETUP_INSTRUCTIONS.md` for detailed setup steps
+- Check `PROJECT_PLAN.md` for implementation details
+- Review backend console logs for error messages
+- Review browser console (F12) for frontend errors
+- Verify MongoDB connection in `.env` file
+
+---
+
+## 🌐 Database Hosting Information
+
+### ❓ Do I Need to Host Database Separately?
+
+**YES!** The database (MongoDB) must be hosted separately. You have two options:
+
+1. **MongoDB Atlas (RECOMMENDED)** ✅
+   - FREE cloud database (M0 tier: 512MB)
+   - No installation needed
+   - Works with GitHub deployments
+   - Accessible from anywhere
+   - Setup: https://www.mongodb.com/cloud/atlas
+   - **This is what you should use!**
+
+2. **Local MongoDB** (NOT for GitHub/deployment)
+   - Only works on your computer
+   - Not accessible for deployed apps
+   - Requires installation
+
+### 🔐 Important Security Note
+
+- **NEVER commit `.env` files to GitHub!** (Already in `.gitignore`)
+- Store database credentials in environment variables
+- Use `.env.example` files as templates
+- For production, use platform environment variables (Vercel, Render, etc.)
+
+**See [GITHUB_SETUP_GUIDE.md](./GITHUB_SETUP_GUIDE.md) for complete database setup instructions.**
+
+---
+
+## 📊 Repository Statistics
+
+- **Total Files:** 48+ files
+- **Languages:** TypeScript (55.9%), JavaScript (26.9%), CSS (16.7%), HTML (0.5%)
+- **Frontend:** React 18 + TypeScript
+- **Backend:** Node.js + Express + MongoDB
+- **Database:** MongoDB (Atlas recommended)
 
 ---
 
 **Happy Swapping! 🎉**
+
+**Repository Link:** [https://github.com/Shivamupa48/Assignment](https://github.com/Shivamupa48/Assignment)
 
