@@ -96,7 +96,7 @@ JWT_SECRET=your_super_secret_jwt_key_change_this_in_production_12345
 - ✅ Works with GitHub deployments
 - ✅ Free tier available (512MB storage)
 - ✅ Accessible from anywhere
-- **Setup Guide:** See [MONGODB_SETUP_GUIDE.md](./MONGODB_SETUP_GUIDE.md) or follow below:
+- **Setup Steps:** Follow the instructions below:
 
 **Quick MongoDB Atlas Setup:**
 1. Sign up at https://www.mongodb.com/cloud/atlas (FREE)
@@ -513,21 +513,14 @@ Built as a Full Stack Developer Internship technical challenge.
 
 ---
 
-## 📞 Support & Documentation
-
-**Detailed Guides Available:**
-- 📘 [GITHUB_SETUP_GUIDE.md](./GITHUB_SETUP_GUIDE.md) - How to push to GitHub and set up database
-- 🗄️ [MONGODB_SETUP_GUIDE.md](./MONGODB_SETUP_GUIDE.md) - Complete MongoDB setup instructions
-- 🔄 [HOW_TO_SWAP_EVENTS_GUIDE.md](./HOW_TO_SWAP_EVENTS_GUIDE.md) - Step-by-step swap process
-- 🛒 [MARKETPLACE_AND_NOTIFICATIONS_GUIDE.md](./MARKETPLACE_AND_NOTIFICATIONS_GUIDE.md) - Feature explanations
-- 🚀 [QUICK_START.md](./QUICK_START.md) - Quick setup guide
+## 📞 Support
 
 **If you encounter issues:**
-- Check `SETUP_INSTRUCTIONS.md` for detailed setup steps
-- Check `PROJECT_PLAN.md` for implementation details
+- Follow the setup instructions in this README
 - Review backend console logs for error messages
 - Review browser console (F12) for frontend errors
 - Verify MongoDB connection in `.env` file
+- Check MongoDB Atlas dashboard for connection status
 
 ---
 
@@ -557,7 +550,7 @@ Built as a Full Stack Developer Internship technical challenge.
 - Use `.env.example` files as templates
 - For production, use platform environment variables (Vercel, Render, etc.)
 
-**See [GITHUB_SETUP_GUIDE.md](./GITHUB_SETUP_GUIDE.md) for complete database setup instructions.**
+**All database setup instructions are included in the README above.**
 
 ---
 
