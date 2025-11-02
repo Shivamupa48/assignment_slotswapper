@@ -563,14 +563,16 @@ Built as a Full Stack Developer Internship technical challenge.
 - **Database:** MongoDB (Atlas recommended)
 
 ---
-
 **Happy Swapping! 🎉**
 
-**Repository Link:** [https://github.com/Shivamupa48/Assignment](https://github.com/Shivamupa48/Assignment)
-**Frontend Link** [https://github.com/Shivamupa48/Assignment](https://assignment-slotswapper.vercel.app)
-**Backend Link:** [https://github.com/Shivamupa48/Assignment](https://assignment-slotswapper.onrender.com)
-**Database Connection String:** [mongodb+srv://<your-username>:<your-password>@<your-cluster>.mongodb.net/slotswapper]
-**Project live Link:** [https://github.com/Shivamupa48/Assignment](https://assignment-slotswapper.vercel.app)
+**Repository Link:** [https://github.com/Shivamupa48/Assignment](https://github.com/Shivamupa48/Assignment)  
 
+**Frontend Link:** [https://assignment-slotswapper.vercel.app](https://assignment-slotswapper.vercel.app)  
 
+**Backend Link:** [https://assignment-slotswapper.onrender.com](https://assignment-slotswapper.onrender.com)  
+
+**Database Connection String:**  
+`mongodb+srv://<your-username>:<your-password>@<your-cluster>.mongodb.net/slotswapper`  
+
+**Project Live Link:** [https://assignment-slotswapper.vercel.app](https://assignment-slotswapper.vercel.app)
 
