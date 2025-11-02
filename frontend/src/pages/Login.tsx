@@ -19,7 +19,12 @@ const Login: React.FC = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      // Handle both Error objects and axios errors
+      const errorMessage = err.message || 
+                          err.response?.data?.message || 
+                          'Login failed. Please try again.';
+      setError(errorMessage);
+      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }

@@ -27,8 +27,13 @@ const Signup: React.FC = () => {
         navigate('/login');
       }, 2000);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Signup failed. Please try again.');
+      // Handle both Error objects and axios errors
+      const errorMessage = err.message || 
+                          err.response?.data?.message || 
+                          'Signup failed. Please try again.';
+      setError(errorMessage);
       setSuccess('');
+      console.error('Signup error:', err);
     } finally {
       setLoading(false);
     }

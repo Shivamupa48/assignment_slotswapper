@@ -2,6 +2,13 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+// Validate API URL to prevent using MongoDB URI by mistake
+if (API_URL.startsWith('mongodb')) {
+  console.error('❌ ERROR: REACT_APP_API_URL is set to a MongoDB URI instead of an HTTP URL!');
+  console.error('Please check your frontend/.env file');
+  console.error('It should contain: REACT_APP_API_URL=http://localhost:5000/api');
+}
+
 // Create axios instance with default config
 const api = axios.create({
   baseURL: API_URL,

@@ -15,6 +15,13 @@ const authenticate = async (req, res, next) => {
 
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
 
+    // Check JWT_SECRET
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ 
+        message: 'Server configuration error. JWT_SECRET is missing.' 
+      });
+    }
+
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     

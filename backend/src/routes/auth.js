@@ -7,7 +7,19 @@ const router = express.Router();
 
 // Generate JWT token
 const generateToken = (userId) => {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET is not configured');
+  }
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+};
+
+// Helper to convert user to response format (convert ObjectId to string)
+const toUserResponse = (user) => {
+  return {
+    id: user._id.toString(), // Convert MongoDB ObjectId to string
+    name: user.name,
+    email: user.email
+  };
 };
 
 // @route   POST /api/auth/signup
@@ -24,31 +36,56 @@ router.post('/signup', async (req, res) => {
       });
     }
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    if (password.length < 6) {
+      return res.status(400).json({ 
+        message: 'Password must be at least 6 characters long.' 
+      });
+    }
+
+    // Normalize email (lowercase and trim) to match User model
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Check if user already exists (with normalized email)
+    const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
       return res.status(400).json({ 
         message: 'User with this email already exists.' 
       });
     }
 
-    // Create new user
-    const user = await User.create({ name, email, password });
+    // Create new user (email will be normalized by model schema)
+    const user = await User.create({ 
+      name: name.trim(), 
+      email: normalizedEmail, 
+      password 
+    });
 
     // Don't return token on signup - user must login separately
     res.status(201).json({
       message: 'User created successfully. Please login to continue.',
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email
-      }
+      user: toUserResponse(user)
     });
   } catch (error) {
     console.error('Signup error:', error);
+    
+    // Handle MongoDB duplicate key error
+    if (error.code === 11000 || error.name === 'MongoServerError') {
+      return res.status(400).json({ 
+        message: 'User with this email already exists.' 
+      });
+    }
+    
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({ 
+        message: messages.join(', ') 
+      });
+    }
+
     res.status(500).json({ 
       message: 'Server error during signup.', 
-      error: error.message 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
@@ -67,8 +104,11 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Find user
-    const user = await User.findOne({ email });
+    // Normalize email (lowercase and trim) to match stored format
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Find user with normalized email
+    const user = await User.findOne({ email: normalizedEmail });
     if (!user) {
       return res.status(401).json({ 
         message: 'Invalid email or password.' 
@@ -83,23 +123,27 @@ router.post('/login', async (req, res) => {
       });
     }
 
+    // Check JWT_SECRET
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is missing!');
+      return res.status(500).json({ 
+        message: 'Server configuration error. Please contact administrator.' 
+      });
+    }
+
     // Generate token
     const token = generateToken(user._id);
 
     res.json({
       message: 'Login successful',
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email
-      }
+      user: toUserResponse(user)
     });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ 
       message: 'Server error during login.', 
-      error: error.message 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
@@ -110,16 +154,12 @@ router.post('/login', async (req, res) => {
 router.get('/me', authenticate, async (req, res) => {
   try {
     res.json({
-      user: {
-        id: req.user._id,
-        name: req.user.name,
-        email: req.user.email
-      }
+      user: toUserResponse(req.user)
     });
   } catch (error) {
     res.status(500).json({ 
       message: 'Server error.', 
-      error: error.message 
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
@@ -184,9 +224,12 @@ router.put('/profile', authenticate, async (req, res) => {
       });
     }
 
+    // Normalize email
+    const normalizedEmail = email.toLowerCase().trim();
+
     // Check if email is already taken by another user
     const existingUser = await User.findOne({ 
-      email, 
+      email: normalizedEmail, 
       _id: { $ne: req.user._id } 
     });
     
@@ -197,17 +240,13 @@ router.put('/profile', authenticate, async (req, res) => {
     }
 
     // Update user
-    req.user.name = name;
-    req.user.email = email.toLowerCase().trim();
+    req.user.name = name.trim();
+    req.user.email = normalizedEmail;
     await req.user.save();
 
     res.json({
       message: 'Profile updated successfully',
-      user: {
-        id: req.user._id,
-        name: req.user.name,
-        email: req.user.email
-      }
+      user: toUserResponse(req.user)
     });
   } catch (error) {
     console.error('Update profile error:', error);
