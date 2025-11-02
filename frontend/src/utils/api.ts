@@ -6,7 +6,8 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 if (API_URL.startsWith('mongodb')) {
   console.error('❌ ERROR: REACT_APP_API_URL is set to a MongoDB URI instead of an HTTP URL!');
   console.error('Please check your frontend/.env file');
-  console.error('It should contain: REACT_APP_API_URL=http://localhost:5000/api');
+  console.error('For production: REACT_APP_API_URL=https://assignment-slotswapper.onrender.com/api');
+  console.error('For local: REACT_APP_API_URL=http://localhost:5000/api');
 }
 
 // Create axios instance with default config
