@@ -567,4 +567,10 @@ Built as a Full Stack Developer Internship technical challenge.
 **Happy Swapping! 🎉**
 
 **Repository Link:** [https://github.com/Shivamupa48/Assignment](https://github.com/Shivamupa48/Assignment)
+**Frontend Link** [https://github.com/Shivamupa48/Assignment](https://assignment-slotswapper.vercel.app)
+**Backend Link:** [https://github.com/Shivamupa48/Assignment](https://assignment-slotswapper.onrender.com)
+**Database Connection String:** [mongodb+srv://<your-username>:<your-password>@<your-cluster>.mongodb.net/slotswapper]
+**Project live Link:** [https://github.com/Shivamupa48/Assignment](https://assignment-slotswapper.vercel.app)
+
+
 
